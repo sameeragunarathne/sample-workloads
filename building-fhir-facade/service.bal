@@ -34,21 +34,6 @@ public type Encounter uscore700:USCoreEncounterProfile;
 
 listener http:Listener httpListener = http:getDefaultListener();
 
-# initialize source system endpoints here
-
-service http:Service /fhir/r4/metadata on httpListener {
-
-    # The capability statement is a key part of the overall conformance framework in FHIR. It is used as a statement of the
-    # features of actual software, or of a set of rules for an application to provide. This statement connects to all the
-    # detailed statements of functionality, such as StructureDefinitions and ValueSets. This composite statement of application
-    # capability may be used for system compatibility testing, code generation, or as the basis for a conformance assessment.
-    # For further information https://hl7.org/fhir/capabilitystatement.html
-    # + return - capability statement as a json
-    isolated resource function get .() returns r4:CapabilityStatement|error {
-        return check r4:generateFHIRCapabilityStatement();
-    }
-}
-
 # Patient API                                                                                                          #
 service /fhir/r4/Patient on new fhirr4:Listener(config = patientApiConfig) {
 
